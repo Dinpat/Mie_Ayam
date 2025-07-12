@@ -5,16 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Pelanggan extends Authenticatable
+class Penjual extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'pelanggan'; // <- ini penting
+    protected $table = 'penjual'; // nama tabel di database (bukan 'penjuals')
 
     protected $fillable = [
         'nama',
-        'nim_nip',
+        'username',
         'password',
-        'role',
     ];
+
+    protected $hidden = [
+        'password',
+    ];
+
 }

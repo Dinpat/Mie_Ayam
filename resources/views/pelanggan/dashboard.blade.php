@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard Pelanggan</title>
 </head>
+
 <body>
-    <h1>Halo, {{ session('user')->nama }} 👋</h1>
+    @extends('layouts.app')
 
-    <p>Anda login sebagai: <strong>{{ session('user')->role }}</strong></p>
+    @section('content')
+        <h1>Dashboard {{ ucfirst(session('user')->role) }}</h1>
+        <p>Selamat datang, {{ session('user')->nama }}</p>
+        <p>Kamu login sebagai <strong>{{ ucfirst(session('user')->role) }}</strong>.</p>
+    @endsection
 
-    <ul>
-        <li><a href="{{ url('/menu') }}">Lihat Menu Mie Ayam</a></li>
-        <li><a href="{{ url('/pesan') }}">Lakukan Pemesanan</a></li>
-        <li><a href="{{ url('/status') }}">Lihat Status Pesanan</a></li>
-        <li><a href="{{ url('/logout') }}">Logout</a></li>
-    </ul>
 </body>
+
 </html>
