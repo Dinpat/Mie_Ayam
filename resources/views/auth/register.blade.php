@@ -32,13 +32,14 @@
             <label>Nama:</label>
             <input type="text" name="nama" class="w-full mb-4 p-2 border rounded" required>
 
-            <label>NIM / NIP:</label>
-            <input type="text" name="nim_nip" class="w-full mb-4 p-2 border rounded" required>
+            <label>Username:</label>
+            <input type="text" name="username" class="w-full mb-4 p-2 border rounded" required>
 
             <label>Role:</label>
             <select name="role" class="w-full mb-4 p-2 border rounded" required>
                 <option value="mahasiswa">Mahasiswa</option>
                 <option value="dosen">Dosen</option>
+                <option value="pengunjung">Pengunjung</option>
             </select>
 
             <label>Password:</label>

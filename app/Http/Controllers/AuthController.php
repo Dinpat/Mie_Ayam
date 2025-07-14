@@ -9,6 +9,7 @@ use App\Models\Penjual;
 use App\Models\Pelanggan;
 use Illuminate\Support\Facades\Session;
 
+
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -22,15 +23,15 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         // Cek Admin
-        $admin = \App\Models\Admin::where('username', $username)->first();
+        $admin = \App\Models\User::where('username', $username)->first();
         if ($admin && Hash::check($password, $admin->password)) {
             Session::put('user', $admin);
             Session::put('role', 'admin');
-            return redirect('/admin/dashboard');
+            return redirect('/penjual/dashboard');
         }
 
         // Cek Penjual
-        $penjual = \App\Models\Penjual::where('username', $username)->first();
+        $penjual = \App\Models\User::where('username', $username)->first();
         if ($penjual && Hash::check($password, $penjual->password)) {
             Session::put('user', $penjual);
             Session::put('role', 'penjual');
@@ -38,7 +39,7 @@ class AuthController extends Controller
         }
 
         // Cek Pelanggan
-        $pelanggan = \App\Models\Pelanggan::where('nim_nip', $username)->first();
+        $pelanggan = \App\Models\User::where('nim_nip', $username)->first();
         if ($pelanggan && Hash::check($password, $pelanggan->password)) {
             Session::put('user', $pelanggan);
             Session::put('role', $pelanggan->role); // 'mahasiswa' atau 'dosen'
@@ -70,7 +71,7 @@ class AuthController extends Controller
             'role' => $request->role,
         ];
 
-        \App\Models\Pelanggan::create($data);
+        
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
     }
@@ -84,7 +85,7 @@ class AuthController extends Controller
     // Proses login penjual
     public function penjualLogin(Request $request)
     {
-        $user = Penjual::where('username', $request->username)->first();
+        $user = user::where('username', $request->username)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             Session::put('user', $user);

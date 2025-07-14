@@ -35,3 +35,4 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 
 Route::get('/penjual/pesanan/create', [App\Http\Controllers\PesananController::class, 'create'])->name('pesanan.create');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');

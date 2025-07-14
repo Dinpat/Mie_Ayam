@@ -13,10 +13,10 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('menu')->insert([
-        ['nama_menu' => 'Mie Ayam Original', 'harga' => 12000],
-        ['nama_menu' => 'Mie Ayam Bakso', 'harga' => 15000],
-        ['nama_menu' => 'Mie Ayam Ceker', 'harga' => 16000]
+        DB::table('menus')->insert([
+        ['nama' => 'Mie Ayam Original', 'harga' => 12000, 'deskripsi' => 'Mie ayam'],
+        ['nama' => 'Mie Ayam Bakso', 'harga' => 15000, 'deskripsi' => 'Mie ayam'],
+        ['nama' => 'Mie Ayam Ceker', 'harga' => 16000, 'deskripsi' => 'Mie ayam']
     ]);
     }
 }

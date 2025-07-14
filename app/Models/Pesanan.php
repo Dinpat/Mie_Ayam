@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    protected $table = 'pesanan';              // Nama tabel
-    protected $primaryKey = 'id_pesanan';      // Gunakan kolom yang benar sebagai primary key
-    public $timestamps = false;                // Karena tidak ada kolom created_at & updated_at
+    protected $table = 'pesanan';              
 
     protected $fillable = [
-        'id_user',
-        'waktu_pesan',
+        'user_id',
         'status_pesanan',
         'lokasi_pesanan',
-        'pembayaran',
         'bukti_pembayaran',
         'status_pembayaran',
+        'total_bayar',
     ];
 }
 
