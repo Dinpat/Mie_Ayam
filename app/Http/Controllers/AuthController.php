@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Admin;
-use App\Models\Penjual;
-use App\Models\Pelanggan;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 
@@ -18,36 +16,27 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $username = $request->input('username');
-        $password = $request->input('password');
+{
+    $username = $request->input('username');
+    $password = $request->input('password');
 
-        // Cek Admin
-        $admin = \App\Models\User::where('username', $username)->first();
-        if ($admin && Hash::check($password, $admin->password)) {
-            Session::put('user', $admin);
-            Session::put('role', 'admin');
-            return redirect('/penjual/dashboard');
-        }
+    $user = User::where('username', $username)->first();
 
-        // Cek Penjual
-        $penjual = \App\Models\User::where('username', $username)->first();
-        if ($penjual && Hash::check($password, $penjual->password)) {
-            Session::put('user', $penjual);
-            Session::put('role', 'penjual');
-            return redirect('/penjual/dashboard');
-        }
-
-        // Cek Pelanggan
-        $pelanggan = \App\Models\User::where('nim_nip', $username)->first();
-        if ($pelanggan && Hash::check($password, $pelanggan->password)) {
-            Session::put('user', $pelanggan);
-            Session::put('role', $pelanggan->role); // 'mahasiswa' atau 'dosen'
-            return redirect('/pelanggan/dashboard');
-        }
-
+    if (!$user || !Hash::check($password, $user->password)) {
         return back()->with('error', 'Login gagal: Username atau password salah');
     }
+
+    Session::put('user', $user);
+    Session::put('role', $user->role);
+
+    if ($user->role === 'admin') {
+        return redirect('/admin/dashboard');
+    } elseif ($user->role === 'penjual') {
+        return redirect('/penjual/dashboard');
+    } else {
+        return redirect('/users/dashboard');
+    }
+}
 
 
     public function showRegisterForm()
@@ -58,42 +47,22 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'nim_nip' => 'required|string|unique:pelanggan,nim_nip',
+            'nama' => 'required|string|max:50',
+            'username' => 'required|string|unique:users,username',
             'password' => 'required|min:6',
-            'role' => 'required|in:mahasiswa,dosen',
+            'role' => 'required|in:admin,dosen,umum',
         ]);
 
         $data = [
             'nama' => $request->nama,
-            'nim_nip' => $request->nim_nip,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ];
 
-        
+        User::create($data); //sudah benar
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
-    }
-
-    // Menampilkan form login penjual
-    public function showPenjualLoginForm()
-    {
-        return view('penjual.login');
-    }
-
-    // Proses login penjual
-    public function penjualLogin(Request $request)
-    {
-        $user = user::where('username', $request->username)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            Session::put('user', $user);
-            Session::put('role', 'penjual');
-            return redirect()->route('penjual.dashboard');
-        }
-
-        return back()->with('error', 'Login gagal: Username atau password salah');
     }
 }
 

@@ -25,7 +25,6 @@
                 </ul>
             </div>
         @endif
-
         <form method="POST" action="{{ route('register.submit') }}">
             @csrf
 
@@ -37,9 +36,8 @@
 
             <label>Role:</label>
             <select name="role" class="w-full mb-4 p-2 border rounded" required>
-                <option value="mahasiswa">Mahasiswa</option>
                 <option value="dosen">Dosen</option>
-                <option value="pengunjung">Pengunjung</option>
+                <option value="umum">Umum</option>
             </select>
 
             <label>Password:</label>
