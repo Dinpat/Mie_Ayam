@@ -44,7 +44,6 @@
 
     <!-- Hero Section -->
     <section id="home" class="text-center py-32 bg-[url('{{ asset('asset/banner.webp') }}')] bg-no-repeat bg-cover text-white">
-
       <div class="max-w-4xl mx-auto px-4">
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Selamat Datang di Website Mie Ayam Pak Rahmat</h2>
         <p class="text-lg md:text-xl mb-8">Pesan darimana saja dan Siap Kami Antar</p>
@@ -60,47 +59,25 @@
       </p>
     </section>
 
-    <!-- Features Section -->
+    <!-- Menu Section -->
     <section id="menu" class="py-20 bg-gray-100">
       <div class="max-w-6xl mx-auto px-4">
         <h3 class="text-3xl font-bold text-center mb-12 text-red-700">Menu</h3>
         <div class="grid md:grid-cols-3 gap-10">
+          @foreach($menus as $menu)
           <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="{{ asset('asset/1.png') }}" alt="Gambar 1">
-            <h4 class="text-xl font-semibold mb-2">Mie Ayam</h4>
-            <p>Mie Ayam enak dambaan mahasiswa Amikom Yogyakarta.</p>
+            <img src="{{ asset('asset/' . $loop->iteration . '.png') }}" alt="{{ $menu->nama }}">
+            <h4 class="text-xl font-semibold mb-2">{{ $menu->nama }}</h4>
+            <p>{{ $menu->deskripsi }}</p>
             <form action="{{ route('keranjang.tambah') }}" method="POST">
-    @csrf
-    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
-    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
-        Beli
-    </button>
-</form>
+              @csrf
+              <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+              <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
+                Beli
+              </button>
+            </form>
           </div>
-          <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="{{ asset('asset/2.png') }}" alt="Gambar 2">
-            <h4 class="text-xl font-semibold mb-2">Bakso</h4>
-            <p>Bakso gurih, kenyal, seger.</p>
-            <form action="{{ route('keranjang.tambah') }}" method="POST">
-    @csrf
-    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
-    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
-        Beli
-    </button>
-</form>
-          </div>
-          <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="{{ asset('asset/3.png') }}" alt="Gambar 3">
-            <h4 class="text-xl font-semibold mb-2">Mie Ayam Bakso</h4>
-            <p>Paket komplit, Mie Ayam + Bakso.</p>
-            <form action="{{ route('keranjang.tambah') }}" method="POST">
-    @csrf
-    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
-    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
-        Beli
-    </button>
-</form>
-          </div>
+          @endforeach
         </div>
       </div>
     </section>
@@ -120,7 +97,6 @@
     <script>
       const menuBtn = document.getElementById("menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
-
       menuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
       });

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('status_pesanan', ['pending', 'diporses', 'dimasak', 'siap diantar', 'selesai'])->default('pending');
+            $table->enum('status_pesanan', ['pending', 'diproses', 'dimasak', 'siap diantar', 'selesai'])->default('pending');
             $table->string('lokasi_pesanan',50);
             $table->enum('status_pembayaran',['belum dibayar', 'sudah dibayar'])->default('belum dibayar');
             $table->string('bukti_pembayaran');

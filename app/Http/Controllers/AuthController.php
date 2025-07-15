@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 class AuthController extends Controller
@@ -26,12 +28,16 @@ class AuthController extends Controller
         return back()->with('error', 'Login gagal: Username atau password salah');
     }
 
-    Session::put('user', $user);
-    Session::put('role', $user->role);
+    Auth::login($user); // ✅ Ini penting
 
-    if ($user->role === 'admin') {
-        return redirect('/admin/dashboard');
-    } elseif ($user->role === 'penjual') {
+    // ✅ Bonus: Cek login berhasil
+    if (Auth::check()) {
+        Log::info('✅ User berhasil login:', ['id' => Auth::id(), 'username' => Auth::user()->username]);
+    } else {
+        Log::warning('❌ Gagal login meski Auth::login() dipanggil.');
+    }
+
+    if ($user->role === 'admin' || $user->role === 'penjual') {
         return redirect('/penjual/dashboard');
     } else {
         return redirect('/users/dashboard');
