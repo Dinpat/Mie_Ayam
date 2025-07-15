@@ -19,6 +19,8 @@
           <a href="#about" class="px-3 py-1 rounded-full text-sm font-medium hover:bg-red-100 text-red-700 font-semibold">About</a>
           <a href="#menu" class="px-3 py-1 rounded-full text-sm font-medium hover:bg-red-100 text-red-700 font-semibold">Menu</a>
           <a href="#contact" class="px-3 py-1 rounded-full text-sm font-medium hover:bg-red-100 text-red-700 font-semibold">Contact</a>
+          <a href="{{ url('/keranjang') }}" class="px-3 py-1 rounded-full text-sm font-medium hover:bg-red-100 text-red-700 font-semibold">Keranjang</a>
+          <a href="{{ route('logout') }}" class="px-3 py-1 rounded-full text-sm font-medium bg-red-700 text-white font-semibold">Log Out</a>
         </nav>
 
         <!-- Mobile Button -->
@@ -35,11 +37,14 @@
         <a href="#about" class="block hover:text-red-700">About</a>
         <a href="#menu" class="block hover:text-red-700">Menu</a>
         <a href="#contact" class="block hover:text-red-700">Contact</a>
+        <a href="{{ url('/keranjang') }}" class="block hover:text-red-700">Keranjang</a>
+        <a href="#" class="block hover:text-red-700">Log Out</a>
       </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="text-center py-32 bg-[url('/asset/banner.webp')] bg-no-repeat bg-cover text-white">
+    <section id="home" class="text-center py-32 bg-[url('{{ asset('asset/banner.webp') }}')] bg-no-repeat bg-cover text-white">
+
       <div class="max-w-4xl mx-auto px-4">
         <h2 class="text-4xl md:text-5xl font-bold mb-6">Selamat Datang di Website Mie Ayam Pak Rahmat</h2>
         <p class="text-lg md:text-xl mb-8">Pesan darimana saja dan Siap Kami Antar</p>
@@ -61,19 +66,40 @@
         <h3 class="text-3xl font-bold text-center mb-12 text-red-700">Menu</h3>
         <div class="grid md:grid-cols-3 gap-10">
           <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="asset/1.png" class="rounded-xl mb-3"/>
+            <img src="{{ asset('asset/1.png') }}" alt="Gambar 1">
             <h4 class="text-xl font-semibold mb-2">Mie Ayam</h4>
             <p>Mie Ayam enak dambaan mahasiswa Amikom Yogyakarta.</p>
+            <form action="{{ route('keranjang.tambah') }}" method="POST">
+    @csrf
+    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
+    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
+        Beli
+    </button>
+</form>
           </div>
           <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="asset/2.png" class="rounded-xl mb-3"/>
+            <img src="{{ asset('asset/2.png') }}" alt="Gambar 2">
             <h4 class="text-xl font-semibold mb-2">Bakso</h4>
             <p>Bakso gurih, kenyal, seger.</p>
+            <form action="{{ route('keranjang.tambah') }}" method="POST">
+    @csrf
+    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
+    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
+        Beli
+    </button>
+</form>
           </div>
           <div class="bg-white p-6 rounded-2xl shadow-md">
-            <img src="asset/3.png" class="rounded-xl mb-3"/>
+            <img src="{{ asset('asset/3.png') }}" alt="Gambar 3">
             <h4 class="text-xl font-semibold mb-2">Mie Ayam Bakso</h4>
             <p>Paket komplit, Mie Ayam + Bakso.</p>
+            <form action="{{ route('keranjang.tambah') }}" method="POST">
+    @csrf
+    <input type="hidden" name="menu_id" value="1"> {{-- ID Menu --}}
+    <button type="submit" class="w-full mt-3 bg-red-700 text-white px-4 py-2 rounded-full hover:bg-red-600">
+        Beli
+    </button>
+</form>
           </div>
         </div>
       </div>

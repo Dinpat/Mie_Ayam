@@ -6,8 +6,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded shadow w-full max-w-sm">
+<body class="bg-red-700 flex items-center justify-center min-h-screen">
+    <div class="flex justify-center items-center h-screen bg-red-700">
+            <div class="w-96 p-6 shadow-lg bg-white rounded-md">
         <h2 class="text-xl font-bold text-center mb-4">Login Pengguna</h2>
 
         @extends('layouts.app')
