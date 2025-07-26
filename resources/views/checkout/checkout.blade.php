@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Checkout - Mie Ayam</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50 text-gray-800">
     <div class="max-w-3xl mx-auto py-12 px-6">
         <h1 class="text-4xl font-bold text-red-700 mb-6 text-center">Checkout</h1>
@@ -21,13 +23,24 @@
                 @csrf
 
                 <div>
-                    <label for="lokasi_pesanan" class="block font-medium text-gray-700 mb-1">Lokasi Pesanan:</label>
-                    <input type="text" id="lokasi_pesanan" name="lokasi_pesanan" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-red-400" required>
+                    <label for="nama" class="block font-medium text-gray-700 mb-1">Nama:</label>
+                    <input type="text" id="nama" name="nama"
+                        class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-red-400"
+                        required>
                 </div>
 
                 <div>
-                    <label for="bukti_pembayaran" class="block font-medium text-gray-700 mb-1">Upload Bukti Pembayaran (QRIS):</label>
-                    <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/*" class="w-full border border-gray-300 rounded-md p-2 bg-white" required>
+                    <label for="lokasi_pesanan" class="block font-medium text-gray-700 mb-1">Lokasi Pesanan:</label>
+                    <input type="text" id="lokasi_pesanan" name="lokasi_pesanan"
+                        class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-red-400"
+                        required>
+                </div>
+
+                <div>
+                    <label for="bukti_pembayaran" class="block font-medium text-gray-700 mb-1">Upload Bukti Pembayaran
+                        (QRIS):</label>
+                    <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/*"
+                        class="w-full border border-gray-300 rounded-md p-2 bg-white" required>
                 </div>
 
                 {{-- Ringkasan Pesanan --}}
@@ -36,7 +49,8 @@
                     <ul class="space-y-1 mb-2">
                         @foreach($keranjang as $item)
                             <li>
-                                {{ $item['nama'] }} (x{{ $item['jumlah'] }}) - Rp{{ number_format($item['harga'], 0, ',', '.') }}
+                                {{ $item['nama'] }} (x{{ $item['jumlah'] }}) -
+                                Rp{{ number_format($item['harga'], 0, ',', '.') }}
                             </li>
                         @endforeach
                     </ul>
@@ -44,7 +58,8 @@
                 </div>
 
                 <div class="text-center mt-6">
-                    <button type="submit" class="bg-red-700 text-white px-6 py-2 rounded-full hover:bg-red-600 transition">
+                    <button type="submit"
+                        class="bg-red-700 text-white px-6 py-2 rounded-full hover:bg-red-600 transition">
                         Kirim Pesanan
                     </button>
                 </div>
@@ -56,4 +71,5 @@
         </div>
     </div>
 </body>
+
 </html>

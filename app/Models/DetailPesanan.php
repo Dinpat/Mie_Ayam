@@ -11,7 +11,18 @@ class DetailPesanan extends Model
         'menu_id',
         'jumlah',
         'catatan',
-      
+
     ];
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
+    public function pesanan()
+    {
+        return $this->belongsTo(Pesanan::class);
+    }
+
 }
 

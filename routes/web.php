@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\KeranjangController;
 use App\Models\Menu;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PenjualController;
+
 
 Route::get('/', function () {
     return redirect('/login'); // arahkan ke halaman login langsung
@@ -142,3 +145,21 @@ Route::get('/checkout', [PesananController::class, 'index'])->name('checkout.che
 Route::get('/cek-auth', function () {
     return Auth::check() ? '✅ Logged in as ' . Auth::user()->username : '❌ Not Logged In';
 });
+
+Route::get('/users/dashboard', [UsersController::class, 'dashboard'])->name('users.dashboard');
+
+Route::get('/penjual/dashboard', [PenjualController::class, 'dashboard'])->name('penjual.dashboard');
+Route::post('/penjual/pesanan/{id}/status', [PenjualController::class, 'ubahStatus']);
+
+Route::get('/beranda', [PesananController::class, 'halamanUtama'])->name('beranda');
+Route::get('/riwayat-pesanan', [PesananController::class, 'riwayatPesanan'])->name('pelanggan.riwayat');
+Route::get('/riwayat-pesanan', [PesananController::class, 'riwayatPesanan'])->name('riwayat.pesanan');
+
+// // routes/web.php atau routes/api.php
+// Route::get('/api/pesanan-user', function () {
+//     $pesananUser = \App\Models\Pesanan::where('user_id', auth()->id())->get();
+//     return response()->json($pesananUser);
+// })->middleware('auth');
+
+// routes/web.php
+Route::get('/api/pesanan-user', [PesananController::class, 'getPesananUser']);

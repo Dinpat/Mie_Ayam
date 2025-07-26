@@ -18,45 +18,55 @@
     @php $keranjang = session('keranjang', []); @endphp
 
     @if(count($keranjang) > 0)
-    <table class="w-full text-left border">
-      <thead class="bg-red-700 text-white">
-      <tr>
-        <th class="px-4 py-2">Menu</th>
-        <th class="px-4 py-2">Harga</th>
-        <th class="px-4 py-2">Jumlah</th>
-        <th class="px-4 py-2">Subtotal</th>
-      </tr>
-      </thead>
-      <tbody>
-      @foreach($keranjang as $id => $item)
-      <tr class="border-t">
-      <td class="px-4 py-2">{{ $item['nama'] }}</td>
-      <td class="px-4 py-2">Rp {{ number_format($item['harga']) }}</td>
-      <td class="px-4 py-2">
-      <div class="flex items-center justify-center gap-2">
-        <form action="{{ route('keranjang.kurangiJumlah') }}" method="POST">
-        @csrf
-        <input type="hidden" name="menu_id" value="{{ $id }}">
-        <button type="submit" class="px-2 py-1 bg-gray-300 rounded">-</button>
-        </form>
+      @php
+        $total = 0;
+      @endphp
+      <table class="w-full text-left border">
+        <thead class="bg-red-700 text-white">
+        <tr>
+          <th class="px-4 py-2">Menu</th>
+          <th class="px-4 py-2">Harga</th>
+          <th class="px-4 py-2">Jumlah</th>
+          <th class="px-4 py-2">Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($keranjang as $id => $item)
+        @php
+        $subtotal = $item['harga'] * $item['jumlah'];
+        $total += $subtotal;
+        @endphp
+        <tr class="border-t">
+          <td class="px-4 py-2">{{ $item['nama'] }}</td>
+          <td class="px-4 py-2">Rp {{ number_format($item['harga']) }}</td>
+          <td class="px-4 py-2">
+          <div class="flex items-center justify-center gap-2">
+          <form action="{{ route('keranjang.kurangiJumlah') }}" method="POST">
+          @csrf
+          <input type="hidden" name="menu_id" value="{{ $id }}">
+          <button type="submit" class="px-2 py-1 bg-gray-300 rounded">-</button>
+          </form>
 
-        <span class="px-2">{{ $item['jumlah'] }}</span>
+          <span class="px-2">{{ $item['jumlah'] }}</span>
 
-        <form action="{{ route('keranjang.tambahJumlah') }}" method="POST">
-        @csrf
-        <input type="hidden" name="menu_id" value="{{ $id }}">
-        <button type="submit" class="px-2 py-1 bg-gray-300 rounded">+</button>
-        </form>
-      </div>
-      </td>
+          <form action="{{ route('keranjang.tambahJumlah') }}" method="POST">
+          @csrf
+          <input type="hidden" name="menu_id" value="{{ $id }}">
+          <button type="submit" class="px-2 py-1 bg-gray-300 rounded">+</button>
+          </form>
+          </div>
+          </td>
+          <td class="px-4 py-2">Rp {{ number_format($subtotal) }}</td>
+        </tr>
+      @endforeach
 
-      <td class="px-4 py-2">Rp {{ number_format($item['harga'] * $item['jumlah']) }}</td>
-      </tr>
-    @endforeach
-      </tbody>
-    </table>
-  @else
-    <p class="text-gray-600">Keranjang masih kosong.</p>
+        <!-- Total Baris -->
+        <tr class="border-t font-bold bg-gray-100">
+          <td colspan="3" class="px-4 py-2 text-right">Total:</td>
+          <td class="px-4 py-2 text-black-700">Rp {{ number_format($total) }}</td>
+        </tr>
+        </tbody>
+      </table>
   @endif
 
     <a href="/users/dashboard"

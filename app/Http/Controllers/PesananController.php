@@ -64,4 +64,46 @@ class PesananController extends Controller
 
         return redirect()->route('users.dashboard')->with('success', 'Pesanan berhasil dikirim!');
     }
+
+    public function dashboardPenjual()
+    {
+        $pesananList = \App\Models\Pesanan::with(['user', 'detailPesanan.menu'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('penjual.dashboard', compact('pesananList'));
+    }
+
+    public function halamanUtama()
+    {
+        $menus = Menu::all();
+
+        $pesananUser = Pesanan::where('user_id', Auth::id())
+            ->where('status_pesanan', '!=', 'selesai') // filter: hanya yg belum selesai
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('beranda', compact('menus', 'pesananUser'));
+    }
+
+    public function riwayatPesanan()
+    {
+        $riwayat = Pesanan::where('user_id', Auth::id())
+            ->where('status_pesanan', 'selesai') // filter: hanya yg selesai
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('riwayat', compact('riwayat'));
+    }
+
+    // app/Http/Controllers/PesananController.php
+public function getPesananUser()
+{
+    $pesanan = \App\Models\Pesanan::where('user_id', auth()->id())
+                ->latest()
+                ->get();
+
+    return response()->json($pesanan);
+}
+
 }
